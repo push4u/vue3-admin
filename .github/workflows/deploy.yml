@@ -2,36 +2,28 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - main # 你的默认分支名称，可能是 main 或 master
+      - master
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v2.3.4 # 如果有新版本，替换为最新版本
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v2.4.3 # 如果有新版本，替换为最新版本
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: 14 # 你的项目所需的 Node.js 版本
-
-      - name: Cache dependencies
-        uses: actions/cache@v2.1.6 # 如果有新版本，替换为最新版本
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          node-version: "14"
 
       - name: Install Dependencies
-        run: npm ci
+        run: npm install
 
       - name: Build
-        run: npm run build # 确保你的 package.json 中有一个名为 "build" 的 script，它应该创建一个名为 "dist" 的目录
+        run: npm run build
 
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@4.1.5 # 如果有新版本，替换为最新版本
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          branch: gh-pages # GitHub Pages 的分支
-          folder: dist # 你的构建脚本生成的文件夹
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
