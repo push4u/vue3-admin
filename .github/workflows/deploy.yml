@@ -1,8 +1,9 @@
-name: Build and Deploy
+name: Build And Deploy vue3-admin
+
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build-and-deploy:
@@ -10,20 +11,25 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
         with:
-          node-version: "14"
+          persist-credentials: false
 
-      - name: Install Dependencies
-        run: npm install
+      - name: Setup Node.js 20.10.0
+        uses: actions/setup-node@master
+        with:
+          node-version: 20.10.0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.11.0
 
       - name: Build
-        run: npm run build:prod
+        run: pnpm install && pnpm build:prod
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+        uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          ACCESS_TOKEN: ${{ secrets.V3_ADMIN_VITE }}
+          BRANCH: gh-pages
+          FOLDER: dist
