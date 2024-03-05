@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Welcome to Vue 3!</h1>
+    <h1>Welcome to vue3-admin!</h1>
   </div>
 </template>
 
@@ -12,6 +12,9 @@ export default {
 
 <style scoped>
 h1 {
-  color: blue;
+  text-align: center;
+  color: rgb(96, 98, 102);
+  margin-top: 200px;
+  font-size: 3em;
 }
 </style>
