@@ -53,7 +53,8 @@ const toSetting = () => {
       <Notify v-if="showNotify" class="right-menu-item" />
       <el-dropdown class="right-menu-item">
         <div class="right-menu-avatar">
-          <el-avatar :icon="UserFilled" :size="30" />
+          <el-avatar v-if="userStore.user?.avatar_file?.url" :src="userStore.user.avatar_file.url" :size="30" />
+          <el-avatar v-else :icon="UserFilled" :size="30" />
           <span>{{ userStore.user?.username }}</span>
         </div>
         <template #dropdown>
