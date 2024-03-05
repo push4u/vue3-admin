@@ -269,7 +269,7 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getTabl
           <el-table-column prop="email" label="邮箱" min-width="110" />
           <el-table-column prop="group" label="部门" min-width="110">
             <template #default="scope">
-              <span>{{ scope.row.group.name }}</span>
+              <span>{{ scope.row.group?.name }}</span>
             </template>
           </el-table-column>
           <el-table-column prop="roleDataForDisplay" label="角色" min-width="110" />

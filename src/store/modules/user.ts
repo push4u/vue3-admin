@@ -11,6 +11,7 @@ import { Form, Login } from "@/api/login"
 import { List as MenuList } from "@/api/system/menu"
 import { User } from "@/api/system/user"
 import { GetMy } from "@/api/system/my"
+import { usePermissionStoreHook } from "./permission"
 
 export const useUserStore = defineStore("user", () => {
   const token = ref<string>(getToken() || "")
@@ -56,7 +57,7 @@ export const useUserStore = defineStore("user", () => {
     user.value = undefined
     resetRouter()
     _resetTagsView()
-    localStorage.removeItem("apiPermissionMap")
+    usePermissionStoreHook().clearApiPermissionMap()
   }
   /** 重置 Token */
   const resetToken = () => {

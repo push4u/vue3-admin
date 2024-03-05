@@ -4,7 +4,7 @@ import { defineStore } from "pinia"
 import { List as ApiList } from "@/api/system/api"
 
 export const usePermissionStore = defineStore("permission", () => {
-  const apiPermissionMap: { [key: string]: boolean } = reactive(
+  let apiPermissionMap: { [key: string]: boolean } = reactive(
     JSON.parse(localStorage.getItem("apiPermissionMap") || "{}")
   )
 
@@ -23,10 +23,14 @@ export const usePermissionStore = defineStore("permission", () => {
   if (Object.keys(apiPermissionMap).length === 0) {
     fetchPermissions()
   }
-
+  const clearApiPermissionMap = () => {
+    apiPermissionMap = {}
+    localStorage.removeItem("apiPermissionMap")
+  }
   return {
     apiPermissionMap,
-    fetchPermissions
+    fetchPermissions,
+    clearApiPermissionMap
   }
 })
 
