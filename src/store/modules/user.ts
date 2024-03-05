@@ -56,6 +56,7 @@ export const useUserStore = defineStore("user", () => {
     user.value = undefined
     resetRouter()
     _resetTagsView()
+    localStorage.removeItem("apiPermissionMap")
   }
   /** 重置 Token */
   const resetToken = () => {

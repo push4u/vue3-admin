@@ -6,6 +6,7 @@ import { type FormInstance, type FormRules } from "element-plus"
 import { User, Lock, Key, Picture, Loading } from "@element-plus/icons-vue"
 import { Form, GetCaptcha } from "@/api/login"
 import ThemeSwitch from "@/components/ThemeSwitch/index.vue"
+import { usePermissionStoreHook } from "@/store/modules/permission"
 
 const router = useRouter()
 
@@ -14,6 +15,7 @@ const loginFormRef = ref<FormInstance | null>(null)
 
 /** 登录按钮 Loading */
 const loading = ref(false)
+
 /** 验证码图片 URL */
 const codeUrl = ref("")
 /** 登录表单数据 */
@@ -37,7 +39,9 @@ const handleLogin = () => {
         .login(loginFormData)
         .then(() => {
           console.log("登录成功")
-          return userStore.getMy()
+          userStore.getMy()
+          usePermissionStoreHook().fetchPermissions()
+          return
         })
         .then(() => {
           // 跳转到用户的首页userStore下的user下的option下的default_route
