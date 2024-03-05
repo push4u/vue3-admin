@@ -1,1 +1,0 @@
-import{r as t}from"./index-Vt0RyUlt.js";const r="/v1/admin/file";function n(e){return t({url:r,method:"delete",data:e})}function o(e){return t({url:r,method:"get",params:e})}export{n as D,o as L,r as a};
