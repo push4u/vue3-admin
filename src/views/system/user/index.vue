@@ -326,9 +326,6 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getTabl
         label-width="100px"
         label-position="right"
       >
-        <el-form-item prop="username" label="用户名">
-          <el-input v-model="formData.username" placeholder="请输入" />
-        </el-form-item>
         <el-form-item prop="password" label="密码">
           <el-input v-model="formData.password" placeholder="请输入" />
         </el-form-item>
