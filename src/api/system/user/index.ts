@@ -11,10 +11,21 @@ export interface Form {
   confirm_password?: string
   password?: string
   phone?: string
+  sex?: number
   roles?: number[]
   username?: string
   avatar?: number
   avatar_file?: File | null
+  option?: UserOption | null
+}
+
+export interface FormMy {
+  email?: string
+  nickname?: string
+  phone?: string
+  avatar?: number
+  avatar_file?: File | null
+  option?: UserOption | null
 }
 
 export interface ListReq extends Pagination {

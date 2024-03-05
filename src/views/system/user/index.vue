@@ -190,30 +190,28 @@ const resetSearch = () => {
 // 角色下拉内容获取  部门下拉内容获取
 const cascaderProps = {
   checkStrictly: true,
-  emitPath: false,
-  label: "name",
-  value: "id"
+  emitPath: false
 }
 const roleCascaderPropsMultiple = {
   ...cascaderProps,
   multiple: true
 }
 
-const roleList = ref<Role.Role[]>([])
-const getRoleList = () => {
-  Role.List({ page: 1, page_size: 999 }).then((res) => {
-    roleList.value = res.data.list
+const roleSelect = ref<Select[]>([])
+const getRoleSelect = () => {
+  Role.Select().then((res) => {
+    roleSelect.value = res.data
   })
 }
-getRoleList()
+getRoleSelect()
 
-const groupList = ref<Group.Group[]>([])
-const getGroupList = () => {
-  Group.List({ page: 1, page_size: 999 }).then((res) => {
-    groupList.value = res.data.list
+const groupSelect = ref<Select[]>([])
+const getGroupSelect = () => {
+  Group.Select().then((res) => {
+    groupSelect.value = res.data
   })
 }
-getGroupList()
+getGroupSelect()
 
 //#endregion
 
@@ -228,7 +226,7 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getTabl
         <el-form-item prop="group_id" label="部门">
           <el-cascader
             v-model="searchData.group_id"
-            :options="groupList"
+            :options="groupSelect"
             :props="cascaderProps"
             placeholder="请选择"
             :show-all-levels="false"
@@ -238,7 +236,7 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getTabl
         <el-form-item prop="role" label="角色">
           <el-cascader
             v-model="searchData.role_id"
-            :options="roleList.map((role) => ({ label: role.name, value: role.id }))"
+            :options="roleSelect"
             :props="cascaderProps"
             placeholder="请选择"
             :show-all-levels="false"
@@ -349,7 +347,7 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getTabl
         <el-form-item prop="group_id" label="部门">
           <el-cascader
             v-model="formData.group_id"
-            :options="groupList"
+            :options="groupSelect"
             :props="cascaderProps"
             placeholder="请选择"
             :show-all-levels="false"
@@ -359,7 +357,7 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getTabl
         <el-form-item prop="roles" label="角色">
           <el-cascader
             v-model="formData.roles"
-            :options="roleList"
+            :options="roleSelect"
             :props="roleCascaderPropsMultiple"
             :disabled="currentUpdateId == 1"
             placeholder="请选择"

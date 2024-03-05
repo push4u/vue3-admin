@@ -156,17 +156,17 @@ const getTableData = () => {
 const groupCascaderPropsMultiple = {
   checkStrictly: true,
   emitPath: false,
-  label: "name",
-  value: "id",
   multiple: true
 }
-const groupList = ref<Group.Group[]>([])
-const getGroupList = () => {
-  Group.List({ page: 1, page_size: 20 }).then((res) => {
-    groupList.value = res.data.list
+
+const groupSelect = ref<Select[]>([])
+const getGroupSelect = () => {
+  Group.Select().then((res) => {
+    groupSelect.value = res.data
   })
 }
-getGroupList()
+getGroupSelect()
+
 //#endregion
 
 // #region api下拉内容获取 用于新增/修改
@@ -289,7 +289,7 @@ const timeHandle = computed(() => (time: string) => {
         <el-form-item prop="groups" label="数据权限">
           <el-cascader
             v-model="formData.groups"
-            :options="groupList"
+            :options="groupSelect"
             :props="groupCascaderPropsMultiple"
             placeholder="请选择"
             :show-all-levels="false"

@@ -5,7 +5,7 @@ import { CirclePlus } from "@element-plus/icons-vue"
 import { usePagination } from "@/hooks/usePagination"
 import { formatDateTime } from "@/utils/index"
 
-import { Form, Create, Delete, Get, List, Update, apiPrefix } from "@/api/system/group"
+import { Form, Create, Delete, Get, List, Update, apiPrefix, Select } from "@/api/system/group"
 import { List as UserList } from "@/api/system/user"
 import { User } from "@/api/system/user"
 import { Group } from "@/api/system/group"
@@ -129,15 +129,13 @@ getUserList()
 
 const groupCascaderProps = {
   emitPath: false,
-  checkStrictly: true,
-  label: "name",
-  value: "id"
+  checkStrictly: true
 }
-let groupOption = [{ id: 0, name: "顶级部门" }]
+const groupSelect = ref<Select[]>([])
 const handleGroupOption = () => {
-  groupOption = [{ id: 0, name: "顶级部门" }]
-  tableData.value.forEach((element) => {
-    groupOption.push(element)
+  Select().then((res) => {
+    groupSelect.value = res.data
+    groupSelect.value.unshift({ value: 0, label: "顶级部门" })
   })
 }
 //#endregion
@@ -237,7 +235,7 @@ const timeHandle = computed(() => (time: string) => {
         <el-form-item prop="parentId" label="上级部门">
           <el-cascader
             v-model="formData.parent_id"
-            :options="groupOption"
+            :options="groupSelect"
             :props="groupCascaderProps"
             placeholder="请选择"
             :show-all-levels="false"

@@ -7,24 +7,15 @@ import type { UploadProps } from "element-plus"
 import { List as MenuList } from "@/api/system/menu"
 import * as Menu from "@/api/system/menu"
 import * as File from "@/api/system/file"
-import { MyForm, UpdateMy, GetMy } from "@/api/system/my"
+import { UpdateMy, GetMy } from "@/api/system/my"
+import { FormMy } from "@/api/system/user"
 
 defineOptions({
   // 命名当前组件
   name: "mySetting"
 })
 
-const myForm = ref<MyForm>({
-  nickname: "",
-  email: "",
-  phone: "",
-  avatar: 0,
-  avatar_file: null,
-  sex: 0,
-  option: {
-    default_router: ""
-  }
-})
+const myForm = ref<FormMy>({})
 
 const rules = {
   nickname: [{ required: true, message: "请输入昵称", trigger: "blur" }],
@@ -40,18 +31,19 @@ const path = import.meta.env.VITE_BASE_API
 
 // 获取我的信息
 GetMy().then((res) => {
-  myForm.value = res.data
+  Object.assign(myForm.value, res.data || {})
 
   // 分割字符串并处理每个层级
-  const parts = res.data.option.default_router.split("/").filter(Boolean)
-  displayValue.value = parts.map((part, index) => {
-    if (index === 0) {
-      return `/${part}`
-    } else {
-      return part
-    }
-  })
-  myForm.value.option.default_router = res.data.option.default_router
+  if (res.data.option) {
+    const parts = res.data.option.default_router.split("/").filter(Boolean)
+    displayValue.value = parts.map((part, index) => {
+      if (index === 0) {
+        return `/${part}`
+      } else {
+        return part
+      }
+    })
+  }
 })
 
 const cascaderProps = {
@@ -61,7 +53,9 @@ const cascaderProps = {
 
 const handleChange = (value: any) => {
   // 数组字符串拼接为字符串
-  myForm.value.option.default_router = value.join("/")
+  if (myForm.value.option) {
+    myForm.value.option.default_router = value.join("/")
+  }
 }
 
 interface GetMenuForTree {
@@ -110,14 +104,7 @@ const uploadError: UploadProps["onError"] = (err) => {
 const save = () => {
   formRef.value?.validate((valid: boolean) => {
     if (valid) {
-      UpdateMy({
-        nickname: myForm.value.nickname,
-        email: myForm.value.email,
-        phone: myForm.value.phone,
-        avatar: myForm.value.avatar,
-        option: myForm.value.option,
-        avatar_file: null
-      }).then((res) => {
+      UpdateMy(myForm.value).then((res) => {
         myForm.value = res.data
         ElMessage.success("修改成功")
         clean()
@@ -169,7 +156,9 @@ getMenuList()
             :src="myForm.avatar_file && myForm.avatar_file.url"
             class="avatar"
           />
-          <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+          <el-icon v-else class="avatar-uploader-icon">
+            <Plus />
+          </el-icon>
         </el-upload>
       </el-form-item>
 

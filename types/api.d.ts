@@ -16,4 +16,11 @@ interface Pagination {
   page_size: number
 }
 
+interface Select {
+  label: string
+  value: number
+}
+
+type SelectRes = Res<Select[]>
+
 type DeleteRes = Res<boolean>

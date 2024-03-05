@@ -73,3 +73,11 @@ export function Get(id: number) {
     method: "get"
   })
 }
+
+// 部门下拉
+export function Select() {
+  return request<SelectRes>({
+    url: apiPrefix + "Select",
+    method: "get"
+  })
+}

@@ -11,7 +11,6 @@ export const permission: Directive = {
       await permissionStore.fetchPermissions()
     }
     await nextTick() // 等待 DOM 更新完成
-    console.log("map", permissions)
     if (!permissions[binding.value]) {
       el.style.display = "none"
       // el.parentNode?.removeChild(el)

@@ -1,16 +1,5 @@
 import { request } from "@/utils/service"
-import { UserOption, User } from "@/api/system/user"
-import { File } from "@/api/system/file"
-
-export interface MyForm {
-  nickname: string
-  email: string
-  phone: string
-  avatar: number
-  avatar_file: File | null
-  sex?: number
-  option: UserOption
-}
+import { FormMy, User } from "@/api/system/user"
 
 export interface MyPasswordForm {
   old_password: string
@@ -21,7 +10,7 @@ export type Detail = Res<User>
 
 export const apiPrefix = "/v1/admin/my"
 
-export function UpdateMy(data: MyForm) {
+export function UpdateMy(data: FormMy) {
   return request<Detail>({
     url: apiPrefix,
     method: "put",

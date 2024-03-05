@@ -1,5 +1,4 @@
 import { request } from "@/utils/service"
-import { LoadingOptionsResolved } from "element-plus"
 
 export interface Form {
   username?: string

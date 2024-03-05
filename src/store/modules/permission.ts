@@ -14,7 +14,6 @@ export const usePermissionStore = defineStore("permission", () => {
         apiPermissionMap[api] = true
       })
     }
-    console.log("apiPermissionMap", apiPermissionMap)
   }
 
   if (Object.keys(apiPermissionMap).length === 0) {
