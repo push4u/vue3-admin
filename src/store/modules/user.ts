@@ -7,8 +7,7 @@ import { getToken, removeToken, setToken } from "@/utils/cache/cookies"
 import { resetRouter, constantRoutes } from "@/router"
 import { type RouteRecordRaw } from "vue-router"
 import { transformBackendRoutes } from "@/router/helper"
-import { loginApi } from "@/api/login"
-import { type LoginRequestData } from "@/api/login/types/login"
+import { Form, Login } from "@/api/login"
 import { List as MenuList } from "@/api/system/menu"
 import { User } from "@/api/system/user"
 import { GetMy } from "@/api/system/my"
@@ -21,8 +20,8 @@ export const useUserStore = defineStore("user", () => {
   const settingsStore = useSettingsStore()
 
   /** 登录 */
-  const login = async ({ username, password, captcha, captcha_id }: LoginRequestData) => {
-    const { data } = await loginApi({ username, password, captcha, captcha_id })
+  const login = async ({ username, password, captcha, captcha_id }: Form) => {
+    const { data } = await Login({ username, password, captcha, captcha_id })
     setToken(data.token)
     token.value = data.token
   }

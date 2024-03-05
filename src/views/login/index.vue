@@ -4,8 +4,7 @@ import { useRouter } from "vue-router"
 import { useUserStore } from "@/store/modules/user"
 import { type FormInstance, type FormRules } from "element-plus"
 import { User, Lock, Key, Picture, Loading } from "@element-plus/icons-vue"
-import { getLoginCodeApi } from "@/api/login"
-import { type LoginRequestData } from "@/api/login/types/login"
+import { Form, GetCaptcha } from "@/api/login"
 import ThemeSwitch from "@/components/ThemeSwitch/index.vue"
 
 const router = useRouter()
@@ -18,12 +17,7 @@ const loading = ref(false)
 /** 验证码图片 URL */
 const codeUrl = ref("")
 /** 登录表单数据 */
-const loginFormData: LoginRequestData = reactive({
-  username: "wuchongde",
-  password: "12345678",
-  captcha: "",
-  captcha_id: ""
-})
+const loginFormData: Form = reactive({})
 /** 登录表单校验规则 */
 const loginFormRules: FormRules = {
   username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
@@ -68,7 +62,7 @@ const createCode = () => {
   loginFormData.captcha_id = ""
   // 获取验证码
   codeUrl.value = ""
-  getLoginCodeApi().then((res) => {
+  GetCaptcha().then((res) => {
     codeUrl.value = res.data.pic_path
     loginFormData.captcha_id = res.data.captcha_id
   })
