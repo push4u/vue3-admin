@@ -1,15 +1,15 @@
 {
-  "name": "v3-admin-vite",
-  "version": "4.3.0",
+  "name": "vue3-admin",
+  "version": "1.0.0",
   "description": "一个免费开源的中后台管理系统基础解决方案，基于 Vue3、TypeScript、Element Plus、Pinia 和 Vite 等主流技术",
   "author": {
-    "name": "pany",
-    "email": "939630029@qq.com",
-    "url": "https://github.com/pany-ang"
+    "name": "push4u",
+    "email": "1595898735@qq.com",
+    "url": "https://github.com/push4u"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/un-pany/v3-admin-vite.git"
+    "url": "https://github.com/push4u/vue3-admin.git"
   },
   "type": "module",
   "scripts": {
