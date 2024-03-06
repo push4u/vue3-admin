@@ -5,12 +5,12 @@ import { usePermissionStoreHook } from "@/store/modules/permission"
 export const permission: Directive = {
   async mounted(el, binding) {
     const permissionStore = usePermissionStoreHook()
-    let permissions = permissionStore.apiPermissionMap
+    let permissions = JSON.parse(localStorage.getItem("apiPermissionMap") || "{}")
 
     // 如果没有权限信息，那么获取权限信息
     if (Object.keys(permissions).length === 0) {
       await permissionStore.fetchPermissions()
-      permissions = permissionStore.apiPermissionMap
+      permissions = JSON.parse(localStorage.getItem("apiPermissionMap") || "{}")
     }
 
     await nextTick() // 等待 DOM 更新完成
