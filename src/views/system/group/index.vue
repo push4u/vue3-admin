@@ -24,10 +24,20 @@ const formRef = ref<FormInstance | null>(null)
 
 const formData = ref<Form>({})
 
+const validateParentId = (rule: any, value: any, callback: any) => {
+  if (value === undefined || value === null || value === "") {
+    callback(new Error("请选择上级部门"))
+  } else if (value === currentUpdateId.value) {
+    callback(new Error("不能选择本部门为上级部门"))
+  } else {
+    callback()
+  }
+}
 const formRules: FormRules = reactive({
   name: [{ required: true, trigger: "blur", message: "请输入名称" }],
   sort: [{ required: true, trigger: "blur", message: "请输入排序" }],
-  status: [{ required: true, trigger: "change", message: "请选择启用状态" }]
+  status: [{ required: true, trigger: "change", message: "请选择启用状态" }],
+  parent_id: [{ required: true, validator: validateParentId, trigger: "change" }]
 })
 
 const handleCreate = () => {
@@ -232,7 +242,7 @@ const timeHandle = computed(() => (time: string) => {
         <el-form-item prop="name" label="部门名称">
           <el-input v-model="formData.name" placeholder="请输入" />
         </el-form-item>
-        <el-form-item prop="parentId" label="上级部门">
+        <el-form-item prop="parent_id" label="上级部门">
           <el-cascader
             v-model="formData.parent_id"
             :options="groupSelect"
