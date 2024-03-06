@@ -55,6 +55,7 @@ export const useUserStore = defineStore("user", () => {
     removeToken()
     token.value = ""
     user.value = undefined
+    dynamicRoutes.value = []
     resetRouter()
     _resetTagsView()
     usePermissionStoreHook().clearApiPermissionMap()
