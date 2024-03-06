@@ -116,11 +116,11 @@ const timeHandle = computed(() => (time: any) => {
           <el-table-column label="数据变动" prop="diff" sortable="custom" width="160">
             <template v-slot="scope">
               <div>
-                <el-popover placement="left" trigger="hover" width="450" v-if="scope.row.diff">
+                <el-popover placement="left" trigger="hover" width="550" v-if="scope.row.diff">
                   <el-table :data="JSON.parse(scope.row.diff)" size="small" class="special-diff-getRowClass">
-                    <el-table-column width="150" property="name" label="名称" />
-                    <el-table-column width="150" property="old" label="旧值" />
-                    <el-table-column width="150" property="new" label="新值" />
+                    <el-table-column width="100" property="name" label="名称" />
+                    <el-table-column width="250" property="old" label="旧值" />
+                    <el-table-column width="250" property="new" label="新值" />
                   </el-table>
                   <template #reference>
                     <el-icon><View /></el-icon>
