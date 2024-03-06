@@ -19,7 +19,10 @@ const loading = ref(false)
 /** 验证码图片 URL */
 const codeUrl = ref("")
 /** 登录表单数据 */
-const loginFormData: Form = reactive({})
+const loginFormData: Form = reactive({
+  username: import.meta.env.VITE_USERNAME,
+  password: import.meta.env.VITE_PASSWORD
+})
 /** 登录表单校验规则 */
 const loginFormRules: FormRules = {
   username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
