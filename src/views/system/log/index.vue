@@ -11,7 +11,7 @@ defineOptions({
 
 const activeName = ref("operationLog")
 </script>
-
+// TODO 改成懒加载，不要一次性加载所有tab的api，只有点击tab的时候才加载对应的api，用户体验更好
 <template>
   <div class="app-container">
     <el-tabs v-model="activeName" type="border-card" class="demo-tabs">

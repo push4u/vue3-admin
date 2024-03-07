@@ -38,6 +38,9 @@ function createService() {
       switch (code) {
         case 0:
           // 本系统采用 code === 0 来表示没有业务错误
+          console.log(
+            "阁下看到这个信息，说明对此项目有兴趣\n我对后端的实现业务逻辑也熟悉，能梳理出后端逻辑\n我正在找一份web前端的工作，如果有招人意向\n可以联系我微信: MTc3MjA0OTAxMDE="
+          )
           return apiData
         case 401:
           // Token 过期时
