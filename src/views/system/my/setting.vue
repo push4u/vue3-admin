@@ -53,8 +53,8 @@ const cascaderProps = {
 
 const handleChange = (value: any) => {
   // 数组字符串拼接为字符串
-  if (myForm.value.option) {
-    myForm.value.option.default_router = value.join("/")
+  myForm.value.option = {
+    default_router: value.join("/")
   }
 }
 

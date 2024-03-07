@@ -42,9 +42,10 @@ const handleLogin = () => {
         .login(loginFormData)
         .then(() => {
           console.log("登录成功")
-          userStore.getMy()
-          usePermissionStoreHook().fetchPermissions()
-          return
+          return userStore.getMy()
+        })
+        .then(() => {
+          return usePermissionStoreHook().fetchPermissions()
         })
         .then(() => {
           // 跳转到用户的首页userStore下的user下的option下的default_route
