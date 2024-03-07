@@ -1,1 +1,0 @@
-import{r as t}from"./index-7i-BJzro.js";const n="/v1/admin/loginLog",i="/v1/admin/operationLog",r="/v1/admin/operationLogHuman";function a(o){return t({url:i,method:"get",params:o})}function g(o){return t({url:r,method:"get",params:o})}function L(o){return t({url:n,method:"get",params:o})}export{L,a,g as b};
