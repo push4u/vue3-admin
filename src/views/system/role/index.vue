@@ -184,8 +184,6 @@ const getApiList = () => {
     // 处理数据 取出api_group相同的数据为一组 组成children 使其符合el-tree的数据格式
     const apiGroup = [...new Set(tmp.map((ele: Api.Api) => ele.api_group))]
     apiGroup.forEach((ele) => {
-      // TODO 不需要验证权限的接口remove掉，用户体验更好，不然用户会疑惑为什么有些接口没有权限也能访问
-      // TODO 想办法将左侧菜单改成，点击也可以重新获取数据，用户体验更好，能兼容更多的用户习惯，用户体验的本质就是兼容更多的用户习惯
       apiList.value.push({
         description: ele,
         id: ele,
@@ -195,10 +193,15 @@ const getApiList = () => {
 
     tmp.forEach((ele: Api.Api) => {
       apiList.value.forEach((item: apiTree) => {
-        if (item.description === ele.api_group) {
+        if (item.description === ele.api_group && ele.is_need_permission) {
           item.children.push(ele)
         }
       })
+    })
+
+    // 删除没有子节点的节点
+    apiList.value = apiList.value.filter((ele) => {
+      return ele.children.length > 0
     })
   })
 }

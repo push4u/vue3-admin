@@ -29,7 +29,6 @@ const validateParentId = (rule: any, value: any, callback: any) => {
     callback(new Error("请选择上级部门"))
   } else if (value === currentUpdateId.value) {
     callback(new Error("不能选择本部门为上级部门"))
-    // TODO 不能选择本部门的子部门为上级部门，以及本部门的子部门的子部门，后端已经处理，前端也需要处理成一致，建议改成不可选的disabled，用户体验更好
   } else {
     callback()
   }
