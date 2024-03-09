@@ -5,7 +5,7 @@ import { CirclePlus } from "@element-plus/icons-vue"
 import { usePagination } from "@/hooks/usePagination"
 import { formatDateTime } from "@/utils/index"
 
-import { DictDetail, Form, Create, Update, Get, Delete, List } from "@/api/system/dict-detail"
+import { DictDetail, apiPrefix, Form, Create, Update, Get, Delete, List } from "@/api/system/dict-detail"
 
 defineOptions({
   // 命名当前组件
@@ -141,7 +141,9 @@ const timeHandle = computed(() => (time: any) => {
     <el-card v-loading="loading" shadow="never">
       <div class="toolbar-wrapper">
         <div>
-          <el-button type="primary" :icon="CirclePlus" @click="dialogVisible = true">新增字典项</el-button>
+          <el-button type="primary" v-permission="apiPrefix + '_POST'" :icon="CirclePlus" @click="dialogVisible = true"
+            >新增字典项</el-button
+          >
         </div>
       </div>
       <div class="table-wrapper">
@@ -162,8 +164,24 @@ const timeHandle = computed(() => (time: any) => {
           </el-table-column>
           <el-table-column label="操作" width="150" align="center">
             <template #default="scope">
-              <el-button type="primary" text bg size="small" @click="handleUpdate(scope.row)">修改</el-button>
-              <el-button type="danger" text bg size="small" @click="handleDelete(scope.row)">删除</el-button>
+              <el-button
+                v-permission="apiPrefix + '/:id_POST'"
+                type="primary"
+                text
+                bg
+                size="small"
+                @click="handleUpdate(scope.row)"
+                >修改</el-button
+              >
+              <el-button
+                v-permission="apiPrefix + '_DELETE'"
+                type="danger"
+                text
+                bg
+                size="small"
+                @click="handleDelete(scope.row)"
+                >删除</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
