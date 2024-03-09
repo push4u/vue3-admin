@@ -19,6 +19,7 @@ interface Pagination {
 interface Select {
   label: string
   value: number
+  children?: Select[]
 }
 
 type SelectRes = Res<Select[]>

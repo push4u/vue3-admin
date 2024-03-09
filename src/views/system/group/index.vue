@@ -41,6 +41,7 @@ const formRules: FormRules = reactive({
 })
 
 const handleCreate = () => {
+  handleGroupOption()
   formRef.value?.validate((valid: boolean, fields) => {
     if (valid) {
       if (currentUpdateId.value === undefined) {
@@ -69,10 +70,13 @@ const handleCreate = () => {
     }
   })
 }
+
 const handleCreateSon = (row: Group) => {
+  handleGroupOption()
   formData.value.parent_id = row.id
   dialogVisible.value = true
 }
+
 const resetForm = () => {
   currentUpdateId.value = undefined
   formRef.value?.resetFields()
@@ -99,6 +103,7 @@ const handleDelete = (row: Group) => {
 const currentUpdateId = ref<undefined | number>(undefined)
 const handleUpdate = (row: Group) => {
   Get(row.id).then((res) => {
+    handleGroupOption()
     currentUpdateId.value = res.data.id
     Object.assign(formData.value, res.data || {})
     dialogVisible.value = true
@@ -137,15 +142,47 @@ const getUserList = () => {
 }
 getUserList()
 
-const groupCascaderProps = {
-  emitPath: false,
-  checkStrictly: true
+const groupOption = ref<Select[]>([{ value: 0, label: "顶级部门" }])
+
+const resetGroupOption = () => {
+  groupOption.value.splice(0, groupOption.value.length, { value: 0, label: "顶级部门" })
 }
-const groupSelect = ref<Select[]>([])
+
+const setGroupOptions = (groupData: Select[], optionsData: Select[], disabled: boolean) => {
+  groupData &&
+    groupData.map((item) => {
+      if (item.children && item.children.length) {
+        const option = {
+          label: item.label,
+          value: item.value,
+          disabled: disabled || item.value === currentUpdateId.value,
+          children: []
+        }
+        setGroupOptions(item.children, option.children, disabled || option.value === currentUpdateId.value)
+        optionsData.push(option)
+      } else {
+        const option = {
+          label: item.label,
+          value: item.value,
+          disabled: disabled || item.value === currentUpdateId.value
+        }
+        optionsData.push(option)
+      }
+    })
+}
+
+const groupCascaderProps = {
+  checkStrictly: true,
+  disabled: "disabled",
+  emitPath: false
+  // emitPath: false,
+  // checkStrictly: true
+}
+
 const handleGroupOption = () => {
+  resetGroupOption()
   Select().then((res) => {
-    groupSelect.value = res.data
-    groupSelect.value.unshift({ value: 0, label: "顶级部门" })
+    setGroupOptions(res.data, groupOption.value, false)
   })
 }
 //#endregion
@@ -245,7 +282,7 @@ const timeHandle = computed(() => (time: string) => {
         <el-form-item prop="parent_id" label="上级部门">
           <el-cascader
             v-model="formData.parent_id"
-            :options="groupSelect"
+            :options="groupOption"
             :props="groupCascaderProps"
             placeholder="请选择"
             :show-all-levels="false"
