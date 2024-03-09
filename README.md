@@ -4,10 +4,12 @@ vue3-admin 是基于 [v3-admin-vite](https://github.com/un-pany/v3-admin-vite) �
 
 ## 测试账号
 
-admin/12345678
-test/12345678
-yanfa/12345678
-yunying/12345678
+- admin/12345678
+- test/12345678
+- yanfa/12345678
+- yunying/12345678
+- xiaoshou/12345678
+- caiwu/12345678
 
 ## 主要特点
 
