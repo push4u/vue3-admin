@@ -38,7 +38,7 @@ export type ListRes = Res<{
 export type Detail = Res<Api>
 
 // api路由公共前缀
-export const apiPrefix = "/v1/admin/apm"
+export const apiPrefix = "/v1/admin/api"
 
 /** 增 */
 export function Create(data: Form) {

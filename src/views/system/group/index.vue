@@ -175,8 +175,6 @@ const groupCascaderProps = {
   checkStrictly: true,
   disabled: "disabled",
   emitPath: false
-  // emitPath: false,
-  // checkStrictly: true
 }
 
 const handleGroupOption = () => {
